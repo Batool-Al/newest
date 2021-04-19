@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-class AddCourses extends StatefulWidget {
+class TeacherAddCourses extends StatefulWidget {
   @override
-  _AddCoursesState createState() => _AddCoursesState();
+  _TeacherAddCoursesState createState() => _TeacherAddCoursesState();
 }
 
-class _AddCoursesState extends State<AddCourses> {
+class _TeacherAddCoursesState extends State<TeacherAddCourses> {
   TextEditingController _courseController, _majorController;
 
   DatabaseReference _ref;
@@ -85,15 +85,14 @@ class _AddCoursesState extends State<AddCourses> {
       'Course': _courseController.text,
       'Major':  _majorController.text,
     };
-
-    _ref.push().set(contact).then((_) {
+     _ref.push().set(contact).then((_) {
      Scaffold.of(context).showSnackBar(
          SnackBar(content: Text('Successfully Added')));
       _courseController.clear();
-       _majorController.clear();
-     }).catchError((onError) {
-       Scaffold.of(context)
-           .showSnackBar(SnackBar(content: Text(onError)));
+      _majorController.clear();
+    }).catchError((onError) {
+      Scaffold.of(context)
+          .showSnackBar(SnackBar(content: Text(onError)));
      }).asStream();
      Navigator.pop(context);
   }

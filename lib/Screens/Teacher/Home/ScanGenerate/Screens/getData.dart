@@ -1,18 +1,21 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'AddCourses.dart';
-import 'EditCourses.dart';
+import 'createqr.dart';
 
-class Courses extends StatefulWidget {
+
+
+class TeacherCourses extends StatefulWidget {
   @override
-  _CoursesState createState() => _CoursesState();
+  _TeacherCoursesState createState() => _TeacherCoursesState();
 }
 
-class _CoursesState extends State<Courses> {
+class _TeacherCoursesState extends State<TeacherCourses> {
+
   Query _ref;
   DatabaseReference reference =
   FirebaseDatabase.instance.reference().child('Courses');
+
   @override
   void initState() {
     // TODO: implement initState
@@ -84,14 +87,14 @@ class _CoursesState extends State<Courses> {
                 onTap: (){
                   Navigator.push(context,
                     MaterialPageRoute(builder: (_) {
-                      return EditCourses( contactKey: contact['key'] );
+                      return CreateScreen( contactKey: contact['key'] );
                     }),);},
                 child: Row(
                   children: [
-                    Icon(Icons.edit,
+                    Icon(Icons.qr_code,
                       color: Theme.of(context).primaryColor,),
                     SizedBox(width: 6,),
-                    Text("Edit",
+                    Text("Generate QR",
                       style: TextStyle(
                         fontSize: 16,
                         color: Theme.of(context).primaryColor,
@@ -100,27 +103,7 @@ class _CoursesState extends State<Courses> {
                 ),
               ),
               SizedBox(width: 20,),
-              GestureDetector(
-                onTap: (){
-                  _showDeleteDialog(contact: contact);
-                },
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.delete,
-                      color: Colors.red[700],
-                    ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                    Text("Delete",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.red[700],
-                            fontWeight: FontWeight.w600)),
-                  ],
-                ),
-              ),
+
               SizedBox(
                 width: 20,
               ),
@@ -131,31 +114,7 @@ class _CoursesState extends State<Courses> {
       ),
     );
   }
-  _showDeleteDialog({Map contact}) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Delete ${contact["Course"]}'),
-            content: Text('Are you sure you want to delete?'),
-            actions: [
-              FlatButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('Cancel')),
-              FlatButton(
-                  onPressed: () {
-                    reference
-                        .child(contact['key'])
-                        .remove()
-                        .whenComplete(() => Navigator.pop(context));
-                  },
-                  child: Text("Delete"))
-            ],
-          );
-        });
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,18 +130,7 @@ class _CoursesState extends State<Courses> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: "add Courses",
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) {
-              return AddCourses();
-            }),
-          );
-        },
-        child: Icon(Icons.add, color: Colors.white),
-      ),
+
     );
   }
 

@@ -1,13 +1,14 @@
-import 'package:flutter_login_purple/Screens/Admin/Courses/AddCourses.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_login_purple/Screens/Teacher/Home/ScanGenerate/ScanGenerateMain.dart';
 import '../../../components/rounded_input_field.dart';
-import 'package:flutter_login_purple/Screens/Admin/Courses/DisplayCourses.dart';
+import 'ScanGenerate/Screens/getData.dart';
 
 
 class TeacherHomePage extends StatefulWidget {
+
   @override
   _TeacherHomePageState createState() => _TeacherHomePageState();
-
   const TeacherHomePage({Key key, }) : super(key: key);
 
 }
@@ -62,23 +63,11 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
           ),
           body: TabBarView(
             children: [
-              buildPage("Hello"),
+              buildPage(
+                ScanGenerate(),),
               buildPage2(
                   Scaffold(
-                    floatingActionButton: FloatingActionButton(
-                      onPressed:  () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder:
-                                (context) => AddCourses())
-                        );
-                      },
-                      tooltip: 'Increment',
-                      child: Icon(Icons.add),
-                      backgroundColor: Colors.indigo,
-                      foregroundColor: Colors.white,
-                      shape: BeveledRectangleBorder (borderRadius: BorderRadius.all(Radius.circular(18.0))),
-                    ),
-                    body: Courses(),
+                    body: TeacherCourses(),
                   )
               ),
               buildPage3(
@@ -99,22 +88,12 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
         ),
       );
 
-  Widget buildPage(String text) =>
-      Column(
-        children: [
-          Container(
-            child: Text(text),
-          ),
-          Container(
-            color: Colors.pink,
-            margin: EdgeInsets.all(20),
-          )
-        ],
-      );
+  Widget buildPage(var scaffold1) =>
+      scaffold1;
   Widget buildPage2(Scaffold scaffold) =>
-      Scaffold(
-        body: scaffold,
-      );
+  Scaffold(
+    body: scaffold,
+  );
   Widget buildPage3(Column container) =>
       Column(
         children: [

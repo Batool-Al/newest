@@ -154,6 +154,7 @@ class _LogInPageState extends State<LogInPage> {
         final result = await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
         print(result.user.uid);
+        String contactKey = result.user.uid;
         await FirebaseFirestore.instance
             .collection('UsersAccounts')
             .doc(result.user.uid)
@@ -175,7 +176,7 @@ class _LogInPageState extends State<LogInPage> {
                 return Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => StudentHomePage()));
+                        builder: (context) => StudentHomePage(contactKey: contactKey)));
               }break;
             case 'Teacher':
               {
